@@ -1,55 +1,85 @@
-# WordPress Playground UX Mockups (v2)
+# WordPress Playground UX Mockups (v3)
 
-## Friction analysis of current playground.wordpress.net
+A ground-up redesign exploration for [playground.wordpress.net](https://playground.wordpress.net), informed by a comprehensive feature and flow audit of the live product.
 
-The current playground.wordpress.net UI suffers from several UX friction points:
+## Research Summary
 
-1. **Too many icon buttons without hierarchy** — The toolbar presents a flat row of icons with no visual grouping, making it hard to identify the primary action or understand what each icon does without hovering.
-2. **No clear document/session identity** — Users land on an unnamed, unsaved session with no indication of its draft/temporary state. There's no filename, no "Untitled" placeholder, and no unsaved indicator.
-3. **Buried technical settings** — Critical options like PHP version, WP version, PHP extensions, and storage mode are hidden in flat menus with no visual hierarchy or grouping.
-4. **No obvious primary action** — Save, Share, Export, and Settings all compete for attention at the same level. There's no visual weight guiding users to what matters most.
-5. **Tangled concepts** — "Site", "Blueprint", and "Storage" are distinct concepts but overlap in the UI. Users can't easily understand what they're editing vs. what they're configuring.
-6. **Poor mobile experience** — The icon-heavy toolbar doesn't adapt well to narrow screens, causing overflow and cramped touch targets.
-7. **No feedback loop** — Actions like changing PHP version or toggling storage mode happen silently with no visual confirmation, leaving users unsure if their change took effect.
+WordPress Playground is a browser-based WordPress environment (WebAssembly) that runs entirely client-side. The product's mental model centers on three primitives:
 
-## Three directions
+- **Sites** — running WordPress instances (temporary, browser-stored, or device-stored)
+- **Blueprints** — declarative JSON configs that describe how to set up WordPress
+- **Storage** — how site data persists (in-memory, browser OPFS, or local filesystem)
 
-Each mockup takes a different real-world product's visual language and interaction model for the "draft document + save + settings + export" primitive and applies it to WordPress Playground.
+The current UI surfaces ~31 user flows through a top bar with 23+ buttons, a flat modal hierarchy, and a resizable sidebar. This redesign explores three distinct information architectures that make the mental model more obvious while keeping all critical flows within ≤2 clicks.
 
-### Direction 1: Figma (Design Tool)
-**Reference product:** Figma  
-**Directory:** `mockup-1-figma/`  
-**Theme:** Dark
+See [research/flows.md](research/flows.md) for the full feature audit.
 
-Borrows Figma's floating toolbar, inspector panel, and canvas metaphor. The WordPress preview sits on a dark dot-grid canvas. A "Draft" badge near the filename signals unsaved state. Settings live in a right-side inspector panel with tabs (Runtime, Storage, Network). The Share button is prominent and blue. Zoom controls sit in the bottom-right corner. A layers panel on the left shows WordPress structural elements (Pages, Templates, Plugins).
+## The Three Directions
 
-**Best for:** Users who think of their WordPress setup as a designable artifact — tweaking versions, extensions, and plugins like adjusting layers in a design file.
+### Direction 1: "Playground is a Notebook" → [mockup-1-notebook/](mockup-1-notebook/index.html)
+A document-centric layout where the preview is the canvas and the chrome is quiet. Advanced actions live in a slim side panel and a command bar (⌘K). Warm neutrals with a sage accent. Inspired by Notion, iA Writer, and Google Docs.
 
-### Direction 2: Google Docs (Document)
-**Reference product:** Google Docs  
-**Directory:** `mockup-2-docs/`  
-**Theme:** Light
+### Direction 2: "Playground is a Workspace" → [mockup-2-workspace/](mockup-2-workspace/index.html)
+Multi-site-first: users land on a grid of their sites. Click a card to open an editor view. A left rail groups Drafts, Saved, and Cloned sites. Cool neutrals with a violet accent. Inspired by Linear, Arc, and Raycast.
 
-Borrows Docs' clean document-centered layout with an autosave indicator ("Saving…" → "All changes saved in browser"), menu bar, toolbar ribbon, and blue Share button with avatar stack. The WordPress preview appears as a centered "page" on a light gray background. Settings open as a right sidebar panel. Slash commands (/) let users install plugins inline.
+### Direction 3: "Playground is a Hub" → [mockup-3-hub/](mockup-3-hub/index.html)
+Everything on one scrolling page. Live preview pinned at top, three panels below for Configure, Extend, and Export & Share. A floating mini-preview appears on scroll. Warm off-white with a coral accent. Inspired by Stripe's settings pages and GitHub Project overviews.
 
-**Best for:** Users who see their Playground session as a document they're drafting — the metaphor of "all changes saved" communicates the ephemeral-yet-persistent nature of browser storage naturally.
+## Critical Flow Coverage (all three mockups)
 
-### Direction 3: VS Code (IDE)
-**Reference product:** Visual Studio Code  
-**Directory:** `mockup-3-vscode/`  
-**Theme:** Dark
+All 12 critical flows are interactive in every mockup:
 
-Borrows VS Code's activity bar, file tabs with unsaved dot indicators, command palette (Ctrl+Shift+P), and status bar. The WordPress preview lives in the editor area. An Extensions sidebar panel lets users browse and install plugins like VS Code extensions. Settings open as a tab with grouped options. The blue status bar at the bottom surfaces PHP version, WP version, storage mode, and plugin count.
+| # | Flow | Interaction |
+|---|------|-------------|
+| 1 | First visit | Default state with preview loaded |
+| 2 | Create site | Template picker (Blank, Blog, Portfolio, Store, Docs, Blueprint) |
+| 3 | Switch sites | Site switcher with saved site list |
+| 4 | Change PHP/WP version | Settings panel with version dropdowns |
+| 5 | Install plugin | Search 6 real plugins + ZIP upload |
+| 6 | Install theme | Gallery with 4 real themes |
+| 7 | Import/export blueprint | URL import, JSON paste, export with copy |
+| 8 | Persist site | 3-option menu (Memory / Browser / Device) |
+| 9 | Download as ZIP | Button with toast confirmation |
+| 10 | Push to GitHub | Modal with repo/branch/PR fields |
+| 11 | Share site | Copy URL to clipboard + blueprint URL |
+| 12 | Keyboard shortcuts | ⌘S (save), ⌘K (command palette / search) |
 
-**Best for:** Developer-oriented users who are comfortable with IDE conventions and appreciate keyboard-driven workflows, command palettes, and information-dense status bars.
+## How to View
 
-## How to view
+### Quick preview
+Open any `index.html` file directly in a browser:
+```bash
+open playground-ux-mockups/index.html
+# or
+open playground-ux-mockups/mockup-1-notebook/index.html
+```
 
-1. Open any mockup's `index.html` directly in a modern browser (Chrome, Firefox, Safari, Edge).
-2. Or open `index.html` in the root of this directory for a landing page with thumbnails linking to each direction.
-3. All mockups are fully self-contained — no build step, no npm, no server required.
-4. Interact with each mockup: click the title to rename, open settings, save, share, install plugins, and try keyboard shortcuts (Ctrl/Cmd+S to save, Ctrl/Cmd+Shift+P for command palette in the VS Code mockup).
+### With live reload (recommended)
+```bash
+# Using Python
+cd playground-ux-mockups && python3 -m http.server 8080
+
+# Using Node
+cd playground-ux-mockups && npx serve .
+
+# Using PHP
+cd playground-ux-mockups && php -S localhost:8080
+```
+Then open `http://localhost:8080` in your browser.
+
+### Responsive testing
+Each mockup is responsive at 360px, 768px, 1024px, and 1280px. Use browser dev tools to test at these widths, or see the `screenshots/` folder for pre-rendered views.
+
+## Design System
+
+Each mockup uses a CSS-variable-driven design system:
+- **Typography**: Inter (400/500/600) + JetBrains Mono for code
+- **Spacing**: 4px base grid (`--space-1` through `--space-8`)
+- **Colors**: Full palette per direction (`--bg`, `--surface`, `--accent`, etc.)
+- **Radii**: `--radius-sm` (6px) through `--radius-xl` (24px)
+- **Icons**: Inline SVGs, Lucide-style (1.5 stroke-width, round caps)
+- **Motion**: 180ms hover, 240ms menus, respects `prefers-reduced-motion`
 
 ## Screenshots
 
-Pre-rendered screenshots at three viewport widths (360px, 768px, 1280px) are in `screenshots/`.
+Pre-rendered at 360px, 768px, 1024px, and 1280px for each mockup, plus the landing page at 360px, 768px, and 1280px. See `screenshots/` folder.
