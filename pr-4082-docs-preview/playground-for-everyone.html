@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>WordPress Playground for Everyone — PR #4082 docs preview</title>
+<style>
+:root {
+	--blue: #3858e9;
+	--ink: #101517;
+	--muted: #50575e;
+	--border: #dcdcde;
+	--bg: #f6f7f7;
+}
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+	color: var(--ink);
+	background: var(--bg);
+	line-height: 1.65;
+	font-size: 16px;
+}
+.banner {
+	background: var(--blue);
+	color: #fff;
+	font-size: 13.5px;
+	padding: 9px 24px;
+	text-align: center;
+}
+.banner a { color: #fff; font-weight: 600; }
+nav {
+	background: #fff;
+	border-bottom: 1px solid var(--border);
+	padding: 0 24px;
+	display: flex;
+	gap: 4px;
+	overflow-x: auto;
+	justify-content: center;
+}
+nav a {
+	display: block;
+	padding: 13px 14px;
+	color: var(--muted);
+	text-decoration: none;
+	font-size: 14px;
+	white-space: nowrap;
+	border-bottom: 2px solid transparent;
+}
+nav a:hover { color: var(--ink); }
+nav a.current { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
+main {
+	max-width: 780px;
+	margin: 0 auto;
+	padding: 48px 24px 96px;
+}
+article {
+	background: #fff;
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 48px 56px 56px;
+	box-shadow: 0 1px 3px rgba(20, 30, 45, 0.06);
+}
+h1 { font-size: 32px; line-height: 1.25; margin: 0 0 20px; }
+h2 { font-size: 24px; margin: 40px 0 12px; }
+h3 { font-size: 19px; margin: 32px 0 10px; }
+a { color: var(--blue); }
+img {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(20, 30, 45, 0.08);
+	margin: 8px 0;
+}
+code {
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-size: 87%;
+	background: #f0f0f1;
+	border-radius: 4px;
+	padding: 2px 5px;
+}
+pre {
+	background: #1e1e1e;
+	color: #e8eaed;
+	border-radius: 8px;
+	padding: 18px 20px;
+	overflow-x: auto;
+	font-size: 13.5px;
+	line-height: 1.55;
+}
+pre code { background: none; color: inherit; padding: 0; }
+blockquote {
+	margin: 16px 0;
+	padding: 2px 20px;
+	border-left: 4px solid var(--blue);
+	background: #f6f7ff;
+	border-radius: 0 8px 8px 0;
+	color: var(--muted);
+}
+footer {
+	text-align: center;
+	color: var(--muted);
+	font-size: 13.5px;
+	margin-top: 40px;
+}
+.cards { display: grid; gap: 16px; margin-top: 28px; }
+.card {
+	display: block;
+	background: #fff;
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 22px 26px;
+	text-decoration: none;
+	color: var(--ink);
+	box-shadow: 0 1px 3px rgba(20, 30, 45, 0.06);
+	transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.card:hover { border-color: var(--blue); box-shadow: 0 3px 12px rgba(56, 88, 233, 0.15); }
+.card h2 { margin: 0 0 6px; font-size: 19px; color: var(--blue); }
+.card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="banner">Review preview of
+	<a href="https://github.com/WordPress/wordpress-playground/pull/4082">WordPress Playground PR #4082</a>
+	— images pinned to commit <code style="background:rgba(255,255,255,.18);color:#fff">6b925f6762</code></div>
+<nav><a href="index.html">Overview</a><a href="playground-for-everyone.html" class="current">WordPress Playground for Everyone</a><a href="troubleshoot-and-debug-blueprints.html">Troubleshoot and debug</a><a href="limitations.html">Limitations</a><a href="build.html">Build</a></nav>
+<main><article><h1>WordPress Playground for Everyone</h1>
+<p><strong>WordPress Playground lets you run WordPress instantly—no server, no setup, no risk.</strong> It works in your browser at <a href="https://playground.wordpress.net">playground.wordpress.net</a>, and developers can also use it via CLI, Node.js, or embedded in their own apps. But you don&#39;t need to be technical to benefit from it.</p>
+<p>Watch this quick overview:</p>
+<iframe width="800" src="https://www.youtube.com/embed/8_rH2k-OQ8E" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<h2>Think of It Like a Car Simulator</h2>
+<p>A car simulator gives you a steering wheel, pedals, and virtual streets. Practice driving, hit cones, make mistakes — nothing bad happens. No real car gets damaged. Want to try again? Just restart.</p>
+<p>WordPress Playground works the same way. It gives you a complete WordPress site to experiment with, but nothing you do affects any real website. Make changes, break things, learn from mistakes — then start fresh whenever you want.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/guides/wordpress-playground-landing-page.webp" alt="WordPress Playground Landing Page"></p>
+<h2>What Can You Do with Playground?</h2>
+<p>When you visit <a href="https://playground.wordpress.net">playground.wordpress.net</a>, you get a WordPress site running entirely in your browser. You can:</p>
+<ul>
+<li>Install plugins and themes</li>
+<li>Edit pages and create content</li>
+<li>Change WordPress and PHP versions</li>
+<li>Explore features you&#39;ve never tried before</li>
+</ul>
+<p>By default, WordPress Playground loads a landing page that introduces Playground. To start with a plain WordPress install, open <strong>New</strong> in the Dock and choose <strong>Vanilla WordPress</strong> from the Blueprint gallery.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/dock-new-playground.webp" alt="The New Playground pane with Vanilla WordPress first in the Blueprint gallery"></p>
+<h2>If You&#39;re Learning WordPress</h2>
+<p>Are you new to WordPress or trying to understand features like the Site Editor or the new features of the latest WordPress Release? Playground is your perfect practice space.</p>
+<h3>Explore How Pages Are Built</h3>
+<p>Playground logs you in as an administrator, so you can edit any page. Click <strong>Edit</strong> for editing posts and <strong>Edit Site</strong> to update the website layout in the top toolbar to open the editor.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/guides/edit-sites-with-playground.webp" alt="Editing WordPress websites"></p>
+<p>Want to understand how a page layout was created? Open the <strong>List View</strong> (the three horizontal lines icon) to see every block that makes up the page.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/guides/site-editor-list-view.webp" alt="Site Editor List view"></p>
+<p>You can inspect columns, headings, images, and buttons — and see exactly how they&#39;re arranged. This is a powerful way to learn by example.</p>
+<h4>Explore the Blueprint Library</h4>
+<p>Open <strong>New</strong> in the Dock to browse the Blueprint gallery. The gallery has examples for art galleries, stores, portfolios, learning environments, and many other starting points.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/dock-new-playground.webp" alt="The Blueprint gallery in the New Playground pane"></p>
+<h3>Try New Features Safely</h3>
+<p>When the WordPress team releases new features, you can test them in Playground before they affect your real site. Open <strong>Site Settings</strong> from the Dock to choose a WordPress or PHP version.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/dock-site-settings.webp" alt="The Site Settings pane"></p>
+<h2>If You Own a WordPress Site</h2>
+<p>Running a live website means every change risks breaking something. Playground lets you test before you commit.</p>
+<h3>Test Plugins Before Installing</h3>
+<p>Curious about a new SEO plugin? Want to compare two contact form options? Install them in Playground first:</p>
+<ol>
+<li>Open <a href="https://playground.wordpress.net">playground.wordpress.net</a></li>
+<li>Go to <strong>Plugins → Add New</strong></li>
+<li>Search for and install any plugin</li>
+<li>Test it thoroughly</li>
+</ol>
+<p>Your real site stays untouched while you evaluate whether the plugin fits your needs.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/guides/installing-plugins.webp" alt="Installing Plugins"></p>
+<h3>Preview Theme Changes</h3>
+<p>Thinking about switching themes? Test your new theme in Playground to see how it handles your content — without disrupting your visitors.</p>
+<h3>Compare Options Side by Side</h3>
+<p>Open multiple browser tabs with different Playground setups. Compare plugin A versus plugin B, or see how your content looks in different themes. Make informed decisions before touching your production site.</p>
+<div class="callout callout-info">
+
+<p><strong>Your Real Site Stays Safe</strong></p>
+<p>Every Playground runs independently in your browser. Nothing syncs to any external server, and nothing affects your live WordPress installation.</p>
+</div>
+
+<h2>If You Use WordPress Daily</h2>
+<p>Even experienced WordPress users benefit from a safe testing environment.</p>
+<h3>Make Design Experiments</h3>
+<p>Want to try a different font size? Adjust spacing? Change colors? Load a Playground with the same theme that you are using in production and edit it freely:</p>
+<ol>
+<li>Open any page in the editor</li>
+<li>Select a block and modify its settings</li>
+<li>See the results immediately</li>
+</ol>
+<p>If you like what you see, recreate those changes on your real site. If not, just close the tab — no cleanup required.</p>
+<h2>Yes, You Can Save Your Work</h2>
+<p><strong>Playground doesn&#39;t have to be temporary.</strong> You can save your progress and return to it later.</p>
+<h3>Save to Your Browser</h3>
+<p>New Playgrounds are autosaved when browser storage is available. Open <strong>Your Playgrounds</strong> from the Dock to return to recent autosaves. Playground keeps up to five recent autosaves.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/your-playgrounds.webp" alt="The Your Playgrounds pane with recent and saved Playgrounds"></p>
+<p>To keep an autosave permanently, click the <strong>Autosaved</strong> status in the Dock, choose <strong>Save in browser storage</strong>, and save it.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/store-permanently-browser.webp" alt="The Store permanently pane with browser storage selected"></p>
+<h3>Download as a ZIP File</h3>
+<p>Need to move your work elsewhere? Open <strong>Export</strong> and choose <strong>Download as .zip</strong>. The ZIP contains the current files, database, plugins, themes, uploads, and edits. You can restore it later with <strong>New → Import zip</strong> or host it on a server that supports PHP and SQLite.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/dock-export-playground.webp" alt="The Export pane"></p>
+<div class="callout callout-tip">
+
+<p><strong>Keep a portable backup</strong></p>
+<p>Browser storage belongs to your browser profile and can be cleared or evicted. Export a ZIP when you need a file you can move or archive.</p>
+</div>
+
+<h2>Next Steps</h2>
+<p>Now that you know Playground is for everyone, explore further:</p>
+<ul>
+<li><a href="https://wordpress.github.io/wordpress-playground/quick-start-guide">Quick Start Guide</a> — A 5-minute walkthrough of Playground basics</li>
+<li><a href="https://wordpress.github.io/wordpress-playground/about">About WordPress Playground</a> — Learn what you can build, test, and launch</li>
+</ul>
+</article>
+<footer>Rendered from branch <code>docs/dock-guide-workflows</code> ·
+	<a href="https://github.com/WordPress/wordpress-playground/pull/4082/files">View the diff</a></footer>
+</main>
+</body>
+</html>

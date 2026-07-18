@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Troubleshoot and debug — PR #4082 docs preview</title>
+<style>
+:root {
+	--blue: #3858e9;
+	--ink: #101517;
+	--muted: #50575e;
+	--border: #dcdcde;
+	--bg: #f6f7f7;
+}
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+		Helvetica, Arial, sans-serif;
+	color: var(--ink);
+	background: var(--bg);
+	line-height: 1.65;
+	font-size: 16px;
+}
+.banner {
+	background: var(--blue);
+	color: #fff;
+	font-size: 13.5px;
+	padding: 9px 24px;
+	text-align: center;
+}
+.banner a { color: #fff; font-weight: 600; }
+nav {
+	background: #fff;
+	border-bottom: 1px solid var(--border);
+	padding: 0 24px;
+	display: flex;
+	gap: 4px;
+	overflow-x: auto;
+	justify-content: center;
+}
+nav a {
+	display: block;
+	padding: 13px 14px;
+	color: var(--muted);
+	text-decoration: none;
+	font-size: 14px;
+	white-space: nowrap;
+	border-bottom: 2px solid transparent;
+}
+nav a:hover { color: var(--ink); }
+nav a.current { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
+main {
+	max-width: 780px;
+	margin: 0 auto;
+	padding: 48px 24px 96px;
+}
+article {
+	background: #fff;
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 48px 56px 56px;
+	box-shadow: 0 1px 3px rgba(20, 30, 45, 0.06);
+}
+h1 { font-size: 32px; line-height: 1.25; margin: 0 0 20px; }
+h2 { font-size: 24px; margin: 40px 0 12px; }
+h3 { font-size: 19px; margin: 32px 0 10px; }
+a { color: var(--blue); }
+img {
+	max-width: 100%;
+	height: auto;
+	border: 1px solid var(--border);
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(20, 30, 45, 0.08);
+	margin: 8px 0;
+}
+code {
+	font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+	font-size: 87%;
+	background: #f0f0f1;
+	border-radius: 4px;
+	padding: 2px 5px;
+}
+pre {
+	background: #1e1e1e;
+	color: #e8eaed;
+	border-radius: 8px;
+	padding: 18px 20px;
+	overflow-x: auto;
+	font-size: 13.5px;
+	line-height: 1.55;
+}
+pre code { background: none; color: inherit; padding: 0; }
+blockquote {
+	margin: 16px 0;
+	padding: 2px 20px;
+	border-left: 4px solid var(--blue);
+	background: #f6f7ff;
+	border-radius: 0 8px 8px 0;
+	color: var(--muted);
+}
+footer {
+	text-align: center;
+	color: var(--muted);
+	font-size: 13.5px;
+	margin-top: 40px;
+}
+.cards { display: grid; gap: 16px; margin-top: 28px; }
+.card {
+	display: block;
+	background: #fff;
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 22px 26px;
+	text-decoration: none;
+	color: var(--ink);
+	box-shadow: 0 1px 3px rgba(20, 30, 45, 0.06);
+	transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.card:hover { border-color: var(--blue); box-shadow: 0 3px 12px rgba(56, 88, 233, 0.15); }
+.card h2 { margin: 0 0 6px; font-size: 19px; color: var(--blue); }
+.card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+</style>
+</head>
+<body>
+<div class="banner">Review preview of
+	<a href="https://github.com/WordPress/wordpress-playground/pull/4082">WordPress Playground PR #4082</a>
+	— images pinned to commit <code style="background:rgba(255,255,255,.18);color:#fff">6b925f6762</code></div>
+<nav><a href="index.html">Overview</a><a href="playground-for-everyone.html">WordPress Playground for Everyone</a><a href="troubleshoot-and-debug-blueprints.html" class="current">Troubleshoot and debug</a><a href="limitations.html">Limitations</a><a href="build.html">Build</a></nav>
+<main><article><h1>Troubleshoot and debug Blueprints</h1>
+<p>Blueprint errors usually point to one of three places:</p>
+<ul>
+<li>The Blueprint JSON is invalid.</li>
+<li>Playground could not fetch the Blueprint or one of its resources.</li>
+<li>A Blueprint step ran, but WordPress, PHP, WP-CLI, or a plugin failed.</li>
+</ul>
+<p>Start with the exact error name shown by Playground, then use the matching
+section below.</p>
+<h2>Quick checklist</h2>
+<ul>
+<li>Paste the Blueprint into the <a href="https://playground.wordpress.net/builder/builder.html">Blueprints editor</a> to validate the JSON schema.</li>
+<li>If the Blueprint is loaded from a URL, open that URL directly in a private browser window and confirm it downloads valid JSON or a Blueprint ZIP bundle.</li>
+<li>If a step fails, note the step number in <code>BlueprintStepExecutionError</code>. The failed step is usually the item at that position after Blueprint shorthands have been expanded.</li>
+<li>Open browser developer tools and check the Console and Network tabs for download, CORS, PHP, or plugin activation details.</li>
+<li>For plugin/theme activation failures, check the Playground <strong>Logs</strong> panel or the browser console for PHP warnings and fatal errors.</li>
+</ul>
+<h2>InvalidBlueprintError</h2>
+<p><code>InvalidBlueprintError</code> means the Blueprint does not match the
+<a href="https://wordpress.github.io/wordpress-playground/blueprints/data-format">Blueprint data format</a>. The error output usually
+contains paths such as <code>/steps/2/pluginData</code> or <code>/preferredVersions</code>.</p>
+<h3>Unexpected property <code>activate</code></h3>
+<p><code>activate</code> belongs inside <code>options</code>, not directly on the step or inside
+<code>pluginData</code>.</p>
+<pre><code class="language-json">{
+    &quot;step&quot;: &quot;installPlugin&quot;,
+    &quot;pluginData&quot;: {
+        &quot;resource&quot;: &quot;wordpress.org/plugins&quot;,
+        &quot;slug&quot;: &quot;woocommerce&quot;
+    },
+    &quot;options&quot;: {
+        &quot;activate&quot;: true
+    }
+}
+</code></pre>
+<h3>Unexpected property <code>plugins</code> in <code>preferredVersions</code></h3>
+<p><code>preferredVersions</code> only accepts <code>php</code> and <code>wp</code>. Install plugins with the
+top-level <code>plugins</code> shorthand or with an explicit <code>installPlugin</code> step.</p>
+<pre><code class="language-json">{
+    &quot;preferredVersions&quot;: {
+        &quot;php&quot;: &quot;8.3&quot;,
+        &quot;wp&quot;: &quot;latest&quot;
+    },
+    &quot;plugins&quot;: [&quot;sqlite-database-integration&quot;]
+}
+</code></pre>
+<h3>Missing <code>slug</code>, <code>url</code>, <code>path</code>, or <code>files</code></h3>
+<p>The resource object is incomplete or uses the wrong shape. Common fixes:</p>
+<ul>
+<li>WordPress.org plugin: <code>{ &quot;resource&quot;: &quot;wordpress.org/plugins&quot;, &quot;slug&quot;: &quot;akismet&quot; }</code></li>
+<li>ZIP URL: <code>{ &quot;resource&quot;: &quot;url&quot;, &quot;url&quot;: &quot;https://example.com/plugin.zip&quot; }</code></li>
+<li>Git directory: <code>{ &quot;resource&quot;: &quot;git:directory&quot;, &quot;url&quot;: &quot;https://github.com/org/repo&quot;, &quot;ref&quot;: &quot;trunk&quot;, &quot;refType&quot;: &quot;branch&quot; }</code></li>
+</ul>
+<p>See <a href="https://wordpress.github.io/wordpress-playground/blueprints/steps/resources">Resources References</a> for all supported
+resource shapes.</p>
+<h3>Mixed plugin install properties</h3>
+<p>Use <code>pluginData</code> for <code>installPlugin</code>. Do not provide both <code>pluginData</code> and
+older examples or custom objects such as <code>pluginZipFile</code>.</p>
+<p>The WordPress.org plugin resource also needs a separate <code>slug</code>:</p>
+<pre><code class="language-json">{
+    &quot;step&quot;: &quot;installPlugin&quot;,
+    &quot;pluginData&quot;: {
+        &quot;resource&quot;: &quot;wordpress.org/plugins&quot;,
+        &quot;slug&quot;: &quot;woocommerce&quot;
+    }
+}
+</code></pre>
+<p>Do not write <code>&quot;resource&quot;: &quot;wordpress.org/plugins/woocommerce&quot;</code>.</p>
+<h2>BlueprintFetchError</h2>
+<p><code>BlueprintFetchError</code> means Playground could not load the file passed to
+<code>?blueprint-url=</code>.</p>
+<p>Check that the URL:</p>
+<ul>
+<li>Is public and does not require cookies, login, a temporary session, or a VPN.</li>
+<li>Returns HTTP 200 when opened directly.</li>
+<li>Serves valid JSON or a ZIP bundle with <code>blueprint.json</code> inside it.</li>
+<li>Sends <code>Access-Control-Allow-Origin: *</code> or another header that allows
+<code>https://playground.wordpress.net</code>.</li>
+<li>Uses a raw file URL, not a repository HTML page.</li>
+</ul>
+<p>For GitHub, use <code>raw.githubusercontent.com</code> URLs instead of <code>github.com/.../blob/...</code>.
+For GitLab, use the raw file URL instead of a <code>/-/blob/</code> page.</p>
+<pre><code class="language-text"># Good
+https://raw.githubusercontent.com/WordPress/blueprints/trunk/blueprints/welcome/blueprint.json
+
+# Not a raw JSON response
+https://github.com/WordPress/blueprints/blob/trunk/blueprints/welcome/blueprint.json
+</code></pre>
+<p>Temporary tunnel URLs, local development URLs, and draft release assets often
+fail because the browser cannot reach them or because they do not allow
+cross-origin requests. Move the Blueprint to a public host with CORS enabled.</p>
+<h3>Blueprint file is neither a valid JSON nor a ZIP file</h3>
+<p>This means Playground received a response, but the response was not a Blueprint.
+The URL may have returned an HTML page, 404 page, repository file viewer, proxy
+warning, login page, or corrupted ZIP.</p>
+<p>Open the URL directly and check that:</p>
+<ul>
+<li>JSON URLs return valid Blueprint JSON.</li>
+<li>ZIP bundle URLs download a real ZIP archive.</li>
+<li>Blueprint bundles contain <code>blueprint.json</code> at the root of the ZIP.</li>
+<li>The response is not a small HTML or text error page.</li>
+</ul>
+<h3>URIError: URI malformed</h3>
+<p><code>URIError: URI malformed</code> usually points to a broken encoded Blueprint fragment
+in the URL, not to a failed Blueprint step. Check for invalid <code>%</code> escapes,
+double-encoded fragments, or raw JSON pasted after <code>#</code>. Rebuild the link from
+the original Blueprint and encode it once, or use Base64. See
+<a href="https://wordpress.github.io/wordpress-playground/blueprints/using-blueprints">Encoded Blueprint fragments</a>.</p>
+<h2>ResourceDownloadError</h2>
+<p><code>ResourceDownloadError</code> means the Blueprint loaded, but a step could not download
+a resource such as a plugin ZIP, theme ZIP, WXR file, or imported site archive.</p>
+<p>Confirm the resource URL:</p>
+<ul>
+<li>Downloads the actual file, not an HTML page, redirect warning, or expired artifact.</li>
+<li>Is public and does not require authentication.</li>
+<li>Allows cross-origin requests.</li>
+<li>Is the direct file URL. Some release pages and CI artifact pages are human pages, not direct downloads.</li>
+<li>Still exists. Temporary links and CI artifacts can expire.</li>
+</ul>
+<p>For source code in a Git repository, prefer a
+<a href="https://wordpress.github.io/wordpress-playground/blueprints/steps/resources#gitdirectoryreference"><code>git:directory</code> resource</a>.
+Use a <code>url</code> resource for built ZIP artifacts that are already publicly
+downloadable.</p>
+<h2>BlueprintStepExecutionError</h2>
+<p><code>BlueprintStepExecutionError</code> means a specific step failed after the Blueprint
+started running. The message includes a step number:</p>
+<pre><code class="language-text">BlueprintStepExecutionError: Error when executing the blueprint step #4
+</code></pre>
+<p>Use that number to inspect the matching step. If your Blueprint uses shorthands
+such as <code>plugins</code>, <code>login</code>, <code>siteOptions</code>, or <code>constants</code>, Playground expands
+them into steps before running the Blueprint. Use explicit <code>steps</code> when the
+order matters.</p>
+<p>URL query parameters such as <code>?plugin=...</code>, <code>?theme=...</code>, <code>?php=...</code>,
+<code>?wp=...</code>, and <code>?networking=yes</code> also create an implicit Blueprint. Errors from
+those URLs are still Blueprint execution errors, and the generated steps affect
+the reported step number.</p>
+<h2>PHP.run() failed with exit code 255</h2>
+<p>Exit code <code>255</code> usually means PHP hit a fatal error. Look for the first
+<code>Fatal error</code>, <code>Uncaught</code>, or <code>TypeError</code> line in the output. The large HTML
+error page around it is usually WordPress&#39;s generic critical error screen.</p>
+<p>To make the output more useful while debugging, enable WordPress debug constants
+near the beginning of the Blueprint:</p>
+<pre><code class="language-json">{
+    &quot;step&quot;: &quot;defineWpConfigConsts&quot;,
+    &quot;consts&quot;: {
+        &quot;WP_DEBUG&quot;: true,
+        &quot;WP_DEBUG_LOG&quot;: true,
+        &quot;WP_DEBUG_DISPLAY&quot;: true,
+        &quot;WP_DISABLE_FATAL_ERROR_HANDLER&quot;: true
+    }
+}
+</code></pre>
+<p>Then rerun the Blueprint and check the Playground <strong>Logs</strong> panel or browser
+console.</p>
+<h2>PHP.run() failed with exit code 1</h2>
+<p>Exit code <code>1</code> often appears when WP-CLI or WordPress returns an application
+error. Read the <code>Stderr</code> section first. It usually names the unsupported
+argument, missing resource, or command-specific failure.</p>
+<p>Some WP-CLI commands behave differently in Playground because WordPress runs in
+WebAssembly with SQLite. Keep commands small and test them individually before
+adding a long chain to a Blueprint.</p>
+<h2>Undefined constant <code>ABSPATH</code></h2>
+<p>This usually happens in a <code>runPHP</code> step that calls WordPress APIs without first
+loading WordPress.</p>
+<p>Add <code>wp-load.php</code> before any WordPress function, constant, option, or plugin API:</p>
+<pre><code class="language-json">{
+    &quot;step&quot;: &quot;runPHP&quot;,
+    &quot;code&quot;: &quot;&lt;?php require &#39;/wordpress/wp-load.php&#39;; update_option(&#39;blogname&#39;, &#39;Demo site&#39;);&quot;
+}
+</code></pre>
+<h2>Plugin could not be activated</h2>
+<p>Plugin activation errors usually come from the plugin itself, not from the
+Blueprint runner. Common causes:</p>
+<ul>
+<li>The plugin requires a newer PHP version or WordPress version.</li>
+<li>The plugin has a fatal error on activation.</li>
+<li>The plugin depends on another plugin that is not installed or activated.</li>
+<li>The plugin performs a redirect or prints unexpected output during activation.</li>
+<li>The plugin ZIP extracts to a folder or main file name different from the path the step is activating.</li>
+</ul>
+<p>If the error says the current PHP or WordPress version does not meet minimum
+requirements, set <code>preferredVersions</code>:</p>
+<pre><code class="language-json">{
+    &quot;preferredVersions&quot;: {
+        &quot;php&quot;: &quot;8.3&quot;,
+        &quot;wp&quot;: &quot;latest&quot;
+    }
+}
+</code></pre>
+<h3>WordPress exited with exit code 0</h3>
+<p>Activation can fail even when WordPress exits with code <code>0</code>. This usually means
+WordPress returned an activation error response rather than a PHP process crash.
+When the message says <code>Inspect the &quot;debug&quot; logs</code>, check the Playground <strong>Logs</strong>
+panel, browser console, or CLI output.</p>
+<p>Look for PHP warnings, redirects or output printed during activation, missing
+dependency plugins, or plugin minimum PHP/WordPress requirements.</p>
+<h3>Current PHP or WordPress version does not meet minimum requirements</h3>
+<p>Version mismatch errors often include text like:</p>
+<pre><code class="language-text">Current PHP version (7.4.33) does not meet minimum requirements. The plugin requires PHP 8.0.
+</code></pre>
+<p>or:</p>
+<pre><code class="language-text">Current WordPress version (6.9.4) does not meet minimum requirements. The plugin requires WordPress 7.0.
+</code></pre>
+<p>Set <code>preferredVersions</code> to a compatible PHP and WordPress version, or use a
+plugin/theme release that supports the versions available in Playground.</p>
+<p>If the error is:</p>
+<pre><code class="language-text">Failed to download WordPress 6.9.0 (HTTP 404)
+</code></pre>
+<p>the requested WordPress build is not available. Use <code>latest</code>, a supported
+released version, or a supported beta/nightly value.</p>
+<p>If the error says <code>Plugin file does not exist</code>, inspect the installed folder
+name. For ZIP URLs with unusual folder names, set <code>targetFolderName</code>:</p>
+<pre><code class="language-json">{
+    &quot;step&quot;: &quot;installPlugin&quot;,
+    &quot;pluginData&quot;: {
+        &quot;resource&quot;: &quot;url&quot;,
+        &quot;url&quot;: &quot;https://example.com/my-plugin.zip&quot;
+    },
+    &quot;options&quot;: {
+        &quot;activate&quot;: true,
+        &quot;targetFolderName&quot;: &quot;my-plugin&quot;
+    }
+}
+</code></pre>
+<p>If the plugin has dependencies, install and activate those dependencies first
+with explicit steps.</p>
+<h2>Theme could not be activated</h2>
+<p>Theme activation failures usually mean the theme folder name is wrong, the
+theme ZIP extracted to an unexpected directory, or the theme code caused a
+WordPress/PHP error.</p>
+<p>Use <code>installTheme</code> with <code>options.activate</code> when installing a theme:</p>
+<pre><code class="language-json">{
+    &quot;step&quot;: &quot;installTheme&quot;,
+    &quot;themeData&quot;: {
+        &quot;resource&quot;: &quot;wordpress.org/themes&quot;,
+        &quot;slug&quot;: &quot;twentytwentyfour&quot;
+    },
+    &quot;options&quot;: {
+        &quot;activate&quot;: true
+    }
+}
+</code></pre>
+<p>If you use a standalone <code>activateTheme</code> step, pass the folder name inside
+<code>wp-content/themes</code>, not a full URL or ZIP filename.</p>
+<h2>Could not write to a file</h2>
+<p>Errors like this mean the parent directory does not exist:</p>
+<pre><code class="language-text">Could not write to &quot;/wordpress/wp-content/plugins/example/index.php&quot;:
+There is no such file or directory OR the parent directory does not exist.
+</code></pre>
+<p>Create the directory first with <code>mkdir</code>, or use <code>writeFiles</code> with a
+<code>literal:directory</code> resource.</p>
+<pre><code class="language-json">[
+    {
+        &quot;step&quot;: &quot;mkdir&quot;,
+        &quot;path&quot;: &quot;/wordpress/wp-content/plugins/example&quot;
+    },
+    {
+        &quot;step&quot;: &quot;writeFile&quot;,
+        &quot;path&quot;: &quot;/wordpress/wp-content/plugins/example/index.php&quot;,
+        &quot;data&quot;: &quot;&lt;?php /* Plugin Name: Example */&quot;
+    }
+]
+</code></pre>
+<h2>Could not unzip file</h2>
+<p>This usually means the file is not a valid ZIP archive. The URL may have
+returned an HTML page, an error response, a login page, or a truncated file.</p>
+<p>If the output says <code>Could not unzip file. Error code: 19</code>, verify the download
+is a ZIP archive. A small file size often means the server returned an HTML
+error page instead of the archive.</p>
+<p>Open the URL directly and confirm the browser downloads a ZIP. If you are using
+a GitHub or CI artifact, use a direct-download URL and make sure the release or
+artifact is public.</p>
+<h2>WP-CLI command pitfalls</h2>
+<p>The <code>wp-cli</code> step runs WP-CLI inside Playground. It is useful for setup tasks,
+but not every command or shell feature behaves like a local terminal.</p>
+<p>Common fixes:</p>
+<ul>
+<li>Use the step name <code>&quot;wp-cli&quot;</code>, not <code>&quot;wpcli&quot;</code> or <code>&quot;cli&quot;</code>.</li>
+<li>Keep commands focused. Prefer multiple <code>wp-cli</code> steps over one complex shell command.</li>
+<li>Avoid shell substitutions such as <code>$(...)</code> in shared Blueprints. Use <code>runPHP</code> for logic that needs WordPress APIs.</li>
+<li>Check parameter names against the WP-CLI command you are using. For example, command-specific parameters may differ between <code>wp post list</code>, <code>wp post delete</code>, and plugin-provided commands.</li>
+<li>If a plugin-provided WP-CLI command fails with a plugin stack trace, the fix usually belongs in that plugin or in the input data passed to the command.</li>
+<li>If a command fails with <code>unknown --post_type parameter</code> or <code>unknown --format parameter</code>, check whether the flags belong to a different command in the pipeline.</li>
+<li>If a plugin command fails with <code>Unsupported argument type passed to WP_CLI::error_to_string(): &#39;NULL&#39;</code>, confirm the plugin is active, the imported data exists, and the command input points to a valid resource.</li>
+</ul>
+<h2>WP-CLI: Error establishing a database connection on mounted sites</h2>
+<p>When using <code>wp-cli</code> with a mounted Playground site, for example via
+<code>--mount-before-install</code>, you might encounter an &quot;Error establishing a database
+connection.&quot; This happens because WordPress Playground loads the SQLite database
+integration plugin from its internal files by default, not from the mounted
+directory.</p>
+<p>Add the SQLite integration plugin to the mounted WordPress site explicitly:</p>
+<pre><code class="language-json">{
+    &quot;preferredVersions&quot;: {
+        &quot;php&quot;: &quot;8.3&quot;,
+        &quot;wp&quot;: &quot;latest&quot;
+    },
+    &quot;plugins&quot;: [&quot;sqlite-database-integration&quot;],
+    &quot;steps&quot;: [
+        {
+            &quot;step&quot;: &quot;login&quot;,
+            &quot;username&quot;: &quot;admin&quot;
+        }
+    ]
+}
+</code></pre>
+<p>Then run the Blueprint with the mounted site:</p>
+<pre><code class="language-bash">mkdir wordpress
+npx @wp-playground/cli server --mount-before-install=wordpress:/wordpress --blueprint=./blueprint.json
+</code></pre>
+<h2>Debugging tools</h2>
+<h3>Blueprints editor</h3>
+<p>Use the in-browser <a href="https://playground.wordpress.net/builder/builder.html">Blueprints editor</a>
+to build, validate, and preview Blueprints.</p>
+<div class="callout callout-warning">
+
+<p><strong>Caution</strong></p>
+<p>The editor is under development and the embedded Playground sometimes fails to
+load. To get around it, refresh the page.</p>
+</div>
+
+<h3>Filesystem and database inspection</h3>
+<p>Some Blueprint steps, such as <a href="https://wordpress.github.io/wordpress-playground/blueprints/steps"><code>writeFile</code></a>,
+alter the internal filesystem. Others, such as
+<a href="https://wordpress.github.io/wordpress-playground/blueprints/steps"><code>runSql</code></a>, alter the database.</p>
+<p>To inspect the final state, use <strong>Files</strong>, <strong>Database</strong>, and <strong>Logs</strong> from the Dock.</p>
+<p>Use <strong>Files</strong> to confirm the Blueprint created, moved, or edited the expected files.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/files.webp" alt="The Files pane showing a selected WordPress file and its contents"></p>
+<p>Use <strong>Database</strong> to inspect tables and records changed by SQL or WordPress steps.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/database.webp" alt="The Database pane showing database inspection tools"></p>
+<p>You can also inspect a Playground instance from the browser console through
+<code>window.playground</code>:</p>
+<pre><code class="language-js">await playground.isDir(&#39;/wordpress/wp-content/plugins&#39;);
+await playground.listFiles(&#39;/wordpress/wp-content/plugins&#39;);
+</code></pre>
+<p>See the full <a href="https://wordpress.github.io/wordpress-playground/api/client/interface/PlaygroundClient">PlaygroundClient API</a>.</p>
+<h3>Browser console and network requests</h3>
+<p>Open browser developer tools to check JavaScript errors, PHP debug logs, and
+failed network requests. In Chrome, Firefox, and Edge, press
+<code>Ctrl + Shift + I</code> on Windows/Linux or <code>Cmd + Option + I</code> on macOS.</p>
+<div class="callout callout-warning">
+
+<p><strong>Safari</strong></p>
+<p>If you have not enabled the Develop menu, go to <strong>Safari &gt; Settings... &gt;
+Advanced</strong> and check <strong>Show features for web developers</strong>.</p>
+</div>
+
+<h3>Custom error logging</h3>
+<p>You can write your own messages with <code>error_log()</code> in a
+<a href="https://wordpress.github.io/wordpress-playground/blueprints/steps"><code>runPHP</code> step</a>, then check the Playground
+<strong>Logs</strong> panel or the browser console.</p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/6b925f67622137ecc18960f4808987147ff99d2b/packages/docs/site/static/img/dock/logs.webp" alt="The Logs pane showing Playground messages and PHP log output"></p>
+<div class="callout callout-info">
+
+<p>When you download your Playground as a ZIP through <strong>Export → Download as .zip</strong>, the archive also includes <code>debug.log</code>.</p>
+</div>
+
+<h2>Ask for help</h2>
+<p>If you need help, <a href="https://github.com/WordPress/wordpress-playground/issues">open an issue</a>
+and include:</p>
+<ul>
+<li>The Blueprint JSON or the public Blueprint URL.</li>
+<li>The exact error message.</li>
+<li>The failing step number, if shown.</li>
+<li>Browser, operating system, and whether you used the website, JavaScript API, or CLI.</li>
+<li>Relevant console, network, or CLI output.</li>
+</ul>
+</article>
+<footer>Rendered from branch <code>docs/dock-guide-workflows</code> ·
+	<a href="https://github.com/WordPress/wordpress-playground/pull/4082/files">View the diff</a></footer>
+</main>
+</body>
+</html>
