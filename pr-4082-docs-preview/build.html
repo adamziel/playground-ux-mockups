@@ -127,7 +127,7 @@ footer {
 <body>
 <div class="banner">Review preview of
 	<a href="https://github.com/WordPress/wordpress-playground/pull/4082">WordPress Playground PR #4082</a>
-	— images pinned to commit <code style="background:rgba(255,255,255,.18);color:#fff">d89ac2b956</code></div>
+	— images pinned to commit <code style="background:rgba(255,255,255,.18);color:#fff">73a051fcd2</code></div>
 <nav><a href="index.html">Overview</a><a href="playground-for-everyone.html">WordPress Playground for Everyone</a><a href="troubleshoot-and-debug-blueprints.html">Troubleshoot and debug</a><a href="limitations.html">Limitations</a><a href="build.html" class="current">Build</a></nav>
 <main><article><h1>Build</h1>
 <p>WordPress Playground can help you to create and learn WordPress quickly, even on mobile with no signal. You can use Playground where you work best, whether that’s in the browser, Node.js, mobile apps, VS Code, or elsewhere.</p>
@@ -147,7 +147,7 @@ Some more examples of this workflow:
 </ul>
 <h2>Synchronize your Playground with a local folder and create GitHub Pull Requests</h2>
 <p>In the Dock, click the <strong>Autosaved</strong> or <strong>Unsaved</strong> save status, select <strong>Save in a local directory</strong>, click <strong>Choose...</strong>, and select an empty directory dedicated to this Playground. After granting write access, click <strong>Save</strong>. Playground copies the current site into the selected directory and overwrites files with matching names; it does not import an existing site from that directory.</p>
-<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/d89ac2b956967925037d2886a79df5ae4924c439/packages/docs/site/static/img/dock/store-permanently-local-directory.webp" alt="The Store permanently pane with local-directory storage selected"></p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/73a051fcd205f7cab5c972c50c9fcf555d72dc82/packages/docs/site/static/img/dock/store-permanently-local-directory.webp" alt="The Store permanently pane with local-directory storage selected"></p>
 <p>Local-directory storage uses the File System Access API, so availability depends on browser and platform support for choosing and writing to directories. Chromium-based desktop browsers usually support it. Browsers without that capability can still use browser storage and ZIP export. See <a href="https://wordpress.github.io/wordpress-playground/developers/limitations#browser-support">Browser support</a> for the broader compatibility model.</p>
 <p>Files changed in Playground are written to the selected directory. Files changed on disk are not pulled into the running Playground automatically. For a local-directory Playground, open the <strong>Saved</strong> status menu in the Dock and choose <strong>Reload files from disk</strong> when you want Playground to read the current files from the directory.</p>
 <p>With this workflow, you can create GitHub PRs directly from changes made in your local directory.</p>

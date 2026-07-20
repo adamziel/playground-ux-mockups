@@ -127,24 +127,24 @@ footer {
 <body>
 <div class="banner">Review preview of
 	<a href="https://github.com/WordPress/wordpress-playground/pull/4082">WordPress Playground PR #4082</a>
-	— images pinned to commit <code style="background:rgba(255,255,255,.18);color:#fff">d89ac2b956</code></div>
+	— images pinned to commit <code style="background:rgba(255,255,255,.18);color:#fff">73a051fcd2</code></div>
 <nav><a href="index.html">Overview</a><a href="playground-for-everyone.html">WordPress Playground for Everyone</a><a href="troubleshoot-and-debug-blueprints.html">Troubleshoot and debug</a><a href="limitations.html" class="current">Limitations</a><a href="build.html">Build</a></nav>
 <main><article><h1>Limitations</h1>
 <p>WordPress Playground is under active development and has some limitations you should keep in mind when running it and developing with it.</p>
 <p>You can track the status of these issues on the <a href="https://github.com/orgs/WordPress/projects/180">Playground Project board</a>.</p>
 <h2>In the browser</h2>
 <h3>Browser storage and recovery</h3>
-<p>Playground runs WordPress in the browser. New Playgrounds are autosaved when browser storage and saving are available, and up to five recent autosaves appear in <strong>Your Playgrounds</strong>. Autosaves are recovery points, not long-term backups. Store an autosave permanently or export a ZIP when you want to keep it.</p>
+<p>Playground runs WordPress in the browser. New Playgrounds are autosaved when browser storage and saving are available, and they appear in <strong>Your Playgrounds</strong>. Only the five most recent autosaves are kept: when a new autosave is created, the oldest one is deleted. Autosaves are recovery points, not long-term backups. Store an autosave permanently or export a ZIP when you want to keep it.</p>
 <p>Use these storage modes deliberately:</p>
 <ul>
-<li><strong>Autosaved</strong>: stored in browser storage and retained while it is one of the recent autosaves kept by Playground.</li>
+<li><strong>Autosaved</strong>: stored in browser storage and retained only while it is one of the five most recent autosaves.</li>
 <li><strong>Saved</strong>: stored permanently in browser storage or saved to a local directory.</li>
 <li><strong>Temporary</strong>: created with <code>?storage=temp</code> or when saving is unavailable. It is discarded when the tab closes or the browser page refreshes.</li>
 </ul>
 <p>The Playground <strong>Refresh page</strong> button reloads the WordPress page inside the current Playground. Browser refresh (Cmd+R or F5) reloads the whole Playground app. A stored or autosaved Playground can recover after that reload, but a temporary Playground cannot.</p>
-<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/d89ac2b956967925037d2886a79df5ae4924c439/packages/docs/site/static/img/dock/persistence-controls.webp" alt="The Dock controls for refreshing WordPress, opening storage choices, and exporting the Playground"></p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/73a051fcd205f7cab5c972c50c9fcf555d72dc82/packages/docs/site/static/img/dock/persistence-controls.webp" alt="The Dock controls for refreshing WordPress, opening storage choices, and exporting the Playground"></p>
 <p>Browser storage still belongs to the browser. Storage pressure, private browsing, profile changes, or clearing site data can remove it. Export a ZIP when you need a portable backup.</p>
-<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/d89ac2b956967925037d2886a79df5ae4924c439/packages/docs/site/static/img/dock/your-playgrounds.webp" alt="The Your Playgrounds pane lists the current Playground, recent autosaves, and saved Playgrounds"></p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/73a051fcd205f7cab5c972c50c9fcf555d72dc82/packages/docs/site/static/img/dock/your-playgrounds.webp" alt="The Your Playgrounds pane lists the current Playground, recent autosaves, and saved Playgrounds"></p>
 <h3>Browser support</h3>
 <p>WordPress Playground is designed to work across all major desktop and mobile browsers. This includes:</p>
 <ul>
@@ -178,7 +178,7 @@ footer {
 <td>1.5-2x slower than desktop</td>
 </tr>
 </tbody></table>
-<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/d89ac2b956967925037d2886a79df5ae4924c439/packages/docs/site/static/img/playground-performance-graph.webp" alt="Playground performance graph"></p>
+<p><img src="https://raw.githubusercontent.com/WordPress/wordpress-playground/73a051fcd205f7cab5c972c50c9fcf555d72dc82/packages/docs/site/static/img/playground-performance-graph.webp" alt="Playground performance graph"></p>
 <p><strong>Factors that affect performance:</strong></p>
 <ul>
 <li><strong>Plugin size</strong>: Large plugins take longer to install at runtime</li>
