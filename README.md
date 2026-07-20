@@ -14,6 +14,12 @@ The current UI surfaces ~31 user flows through a top bar with 23+ buttons, a fla
 
 See [research/flows.md](research/flows.md) for the full feature audit.
 
+## Latest Exploration
+
+### [Blueprint editor](blueprint-editor/index.html)
+A document-style builder for WordPress Blueprints. It brings runtime choices, themes, plugins,
+content, access, and finishing steps into one editable route that compiles to `blueprint.json`.
+
 ## The Three Directions
 
 ### Direction 1: "Playground is a Notebook" → [mockup-1-notebook/](mockup-1-notebook/index.html)
